@@ -1,0 +1,16 @@
+// this is our just created themes.scss file, make sure the path to the file is correct
+@use 'themes' as *;
+
+// framework component styles
+@use '@nebular/theme/styles/globals' as *;
+
+// install the framework styles
+@include nb-install() {
+  @include nb-theme-global();
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
+
+* {
+  font-family: 'Roboto', sans-serif;
+}

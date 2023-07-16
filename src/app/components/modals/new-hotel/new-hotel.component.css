@@ -1,0 +1,12 @@
+form {
+    width: 600px;
+}
+
+input {
+    margin-bottom: 15px;
+}
+
+nb-card-footer {
+    display: flex;
+    justify-content: space-between;
+}

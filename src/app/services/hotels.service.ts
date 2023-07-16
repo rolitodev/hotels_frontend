@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, throwError } from 'rxjs';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../environment/environment';
+import { header } from '../utils/header.tool';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,11 @@ export class HotelsService {
   constructor(private http: HttpClient) { }
 
   getToken(): Observable<any> {
-    return this.http.post(`${this.api}`, {}).pipe(
+    return this.http.post(`${this.api}/login`, {}).pipe(
       map((response: any) => {
+        if (response.token) {
+          sessionStorage.setItem('token', response.token);
+        }
         return response;
       }),
       catchError(this.handleError)
@@ -23,7 +27,9 @@ export class HotelsService {
   }
 
   getAllHotels(): Observable<any> {
-    return this.http.get(`${this.api}/`).pipe(
+    let token: string = sessionStorage.getItem('token')!;
+    let _header: HttpHeaders = header.append('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.api}`, { headers: _header }).pipe(
       map((response: any) => {
         return response;
       }),
@@ -32,7 +38,9 @@ export class HotelsService {
   }
 
   getHotelById(id: string): Observable<any> {
-    return this.http.get(`${this.api}/${id}`).pipe(
+    let token: string = sessionStorage.getItem('token')!;
+    let _header: HttpHeaders = header.append('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.api}/${id}`, { headers: _header }).pipe(
       map((response: any) => {
         return response;
       }),
@@ -40,8 +48,10 @@ export class HotelsService {
     );
   }
 
-  creteHotel(newHotel: any): Observable<any> {
-    return this.http.post(`${this.api}/`, { ...newHotel }).pipe(
+  createHotel(newHotel: any): Observable<any> {
+    let token: string = sessionStorage.getItem('token')!;
+    let _header: HttpHeaders = header.append('Authorization', `Bearer ${token}`);
+    return this.http.post(`${this.api}/`, newHotel, { headers: _header }).pipe(
       map((response: any) => {
         return response;
       }),
@@ -50,7 +60,9 @@ export class HotelsService {
   }
 
   updateHotel(id: string, hotel: any): Observable<any> {
-    return this.http.put(`${this.api}/${id}`, { ...hotel }).pipe(
+    let token: string = sessionStorage.getItem('token')!;
+    let _header: HttpHeaders = header.append('Authorization', `Bearer ${token}`);
+    return this.http.put(`${this.api}/${id}`, hotel, { headers: _header }).pipe(
       map((response: any) => {
         return response;
       }),
@@ -58,8 +70,10 @@ export class HotelsService {
     );
   }
 
-  deleteHotel(id: string): Observable<any> {
-    return this.http.delete(`${this.api}/${id}`).pipe(
+  deleteHotel(id: number): Observable<any> {
+    let token: string = sessionStorage.getItem('token')!;
+    let _header: HttpHeaders = header.append('Authorization', `Bearer ${token}`);
+    return this.http.delete(`${this.api}/${id}`, { headers: _header }).pipe(
       map((response: any) => {
         return response;
       }),
@@ -68,15 +82,9 @@ export class HotelsService {
   }
 
   filterHotels(params: any): Observable<any> {
-    // Construir los parámetros de la solicitud
-    let queryParams = new HttpParams();
-    for (const key in params) {
-      if (params.hasOwnProperty(key)) {
-        queryParams = queryParams.set(key, params[key]);
-      }
-    }
-
-    return this.http.get(`${this.api}/hotels/filter`, { params: queryParams }).pipe(
+    let token: string = sessionStorage.getItem('token')!;
+    let _header: HttpHeaders = header.append('Authorization', `Bearer ${token}`);
+    return this.http.post(`${this.api}/filter`, params, { headers: _header }).pipe(
       map((response: any) => {
         return response;
       }),

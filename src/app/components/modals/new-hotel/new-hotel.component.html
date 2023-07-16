@@ -1,0 +1,61 @@
+<nb-card>
+
+    <nb-card-header>Crear un Hotel</nb-card-header>
+
+    <nb-card-body>
+
+        <form [formGroup]="formNewHotel">
+
+            <nb-form-field>
+                <label for="names">Nombres</label>
+                <input type="text" id="names" nbInput fullWidth fieldSize="large"
+                    placeholder="Ingresa el nombre del hotel" formControlName="name"
+                    [status]="isSubmit && form['name'].errors ? 'danger' : ''">
+            </nb-form-field>
+
+            <nb-form-field>
+                <label for="address">Dirección</label>
+                <input type="text" id="address" nbInput fullWidth fieldSize="large"
+                    placeholder="Ingresa la dirección del hotel" formControlName="address"
+                    [status]="isSubmit && form['address'].errors ? 'danger' : ''">
+            </nb-form-field>
+
+            <nb-form-field>
+                <label for="country">País</label>
+                <input type="text" id="country" nbInput fullWidth fieldSize="large" placeholder="Ingresa el país"
+                    formControlName="country" [status]="isSubmit && form['country'].errors ? 'danger' : ''">
+            </nb-form-field>
+
+            <nb-form-field>
+                <label for="city">Ciudad</label>
+                <input type="text" id="city" nbInput fullWidth fieldSize="large" placeholder="Ingresa la ciudad"
+                    formControlName="city" [status]="isSubmit && form['city'].errors ? 'danger' : ''">
+            </nb-form-field>
+
+            <nb-form-field>
+                <label for="stars">Estrellas</label>
+                <input type="number" id="stars" nbInput fullWidth fieldSize="large"
+                    placeholder="Ingresa la cantidad de estrellas (1-5)" formControlName="stars" min="1" max="5"
+                    maxlength="5" [status]="isSubmit && form['stars'].errors ? 'danger' : ''"
+                    (keypress)="numberOnly($event);">
+            </nb-form-field>
+
+            <nb-form-field>
+                <label for="description">Descripción</label>
+                <textarea nbInput fullWidth placeholder="Ingresa la descripción del hotel" id="description"
+                    formControlName="description"
+                    [status]="isSubmit && form['description'].errors ? 'danger' : ''"></textarea>
+            </nb-form-field>
+
+        </form>
+
+    </nb-card-body>
+
+    <nb-card-footer>
+        <button nbButton hero status="primary" [disabled]="isLoading" (click)="registerHotel()">
+            Registrar
+        </button>
+        <button nbButton (click)="close(false)" [disabled]="isLoading">Cerrar</button>
+    </nb-card-footer>
+
+</nb-card>
