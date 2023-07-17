@@ -4,6 +4,7 @@ import { HotelsService } from 'src/app/services/hotels.service';
 import { NbDialogService } from '@nebular/theme';
 import { NewHotelComponent } from '../modals/new-hotel/new-hotel.component';
 import { NotifyService } from 'src/app/services/notify.service';
+import { config } from '../../utils/modal.tool';
 
 @Component({
   selector: 'app-home',
@@ -36,14 +37,6 @@ export class HomeComponent implements OnInit {
   }
 
   addHotel(): void {
-
-    const config: any = {
-      autoFocus: true,
-      closeOnBackdropClick: false,
-      hasBackdrop: true,
-      context: {},
-    };
-
     this.dialogService.open(NewHotelComponent, config)
       .onClose.subscribe(closed => {
         if (closed.status) {

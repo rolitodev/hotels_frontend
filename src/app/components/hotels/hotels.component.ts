@@ -1,8 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NbDialogService } from '@nebular/theme';
 import { Observable, catchError, tap } from 'rxjs';
 
 import { HotelsService } from 'src/app/services/hotels.service';
 import { NotifyService } from 'src/app/services/notify.service';
+import { EditHotelComponent } from '../modals/edit-hotel/edit-hotel.component';
+import { config } from 'src/app/utils/modal.tool';
 
 @Component({
   selector: 'app-hotels',
@@ -19,7 +22,8 @@ export class HotelsComponent {
 
   public nameFilter: string = '';
 
-  constructor(public _hotels: HotelsService, public _notify: NotifyService) { }
+  constructor(public _hotels: HotelsService, public _notify: NotifyService,
+    public dialogService: NbDialogService) { }
 
   ngOnChanges() {
     if (this.hotels && this.hotels.length > 0) {
@@ -27,8 +31,14 @@ export class HotelsComponent {
     }
   }
 
-  editHotel(id: number): void {
-    console.log(id);
+  editHotel(data: any): void {
+    config.context = { data };
+    this.dialogService.open(EditHotelComponent, config)
+      .onClose.subscribe(closed => {
+        if (closed.status) {
+          this.refreshData.emit(true);
+        }
+      });
   }
 
   deleteHotel(id: number): void {

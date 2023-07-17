@@ -31,7 +31,7 @@
                     <td>{{ item.createdAt | date: 'dd/MM/yyyy' }}</td>
                     <td class="buttons-actions">
                         <button nbButton hero status="warning" [nbTooltip]="'Edita a ' + item.name"
-                            (click)="editHotel(item._id)">
+                            (click)="editHotel(item)">
                             <nb-icon icon="edit-outline"></nb-icon>
                         </button>
                         <button nbButton hero status="danger" [nbTooltip]="'Elimina a ' + item.name"

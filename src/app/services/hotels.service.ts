@@ -59,10 +59,10 @@ export class HotelsService {
     );
   }
 
-  updateHotel(id: string, hotel: any): Observable<any> {
+  updateHotel(hotel: any): Observable<any> {
     let token: string = sessionStorage.getItem('token')!;
     let _header: HttpHeaders = header.append('Authorization', `Bearer ${token}`);
-    return this.http.put(`${this.api}/${id}`, hotel, { headers: _header }).pipe(
+    return this.http.put(`${this.api}/${hotel._id}`, hotel, { headers: _header }).pipe(
       map((response: any) => {
         return response;
       }),

@@ -19,8 +19,8 @@ export class NewHotelComponent {
   public isSubmit: boolean = false;
 
   constructor(
-    private dialogRef: NbDialogRef<NewHotelComponent>, 
-    public _fb: FormBuilder, public _hotels: HotelsService, 
+    private dialogRef: NbDialogRef<NewHotelComponent>,
+    public _fb: FormBuilder, public _hotels: HotelsService,
     public _notify: NotifyService) {
 
     this.formNewHotel = this._fb.group({
@@ -29,7 +29,7 @@ export class NewHotelComponent {
       city: [null, [Validators.required]],
       country: [null, [Validators.required]],
       stars: [null, [Validators.required, Validators.min(1), Validators.max(5)]],
-      description:[null, [Validators.required]]
+      description: [null, [Validators.required]]
     });
 
   }
@@ -53,7 +53,7 @@ export class NewHotelComponent {
         })
       ).subscribe();
     } else {
-      this._notify.show('info', '¡Hey!', 'Debes llenar todos los campos del formulario.')
+      this._notify.show('info', '¡Hey!', 'Debes llenar todos los campos del formulario.');
     }
   }
 
@@ -64,11 +64,10 @@ export class NewHotelComponent {
   numberOnly(event: any) { // Not works good
     const charCode = (event.which) ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 46 || charCode > 57)) {
-        return false;
+      return false;
     }
     return true;
-}
-
+  }
 
   close(status: boolean): void {
     this.dialogRef.close({ status });
